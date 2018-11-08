@@ -1,0 +1,20 @@
+{
+  "utilisateurs":
+  [
+    {
+      "nom" : "Toto",
+      "role" : "salarie",
+      "mdp" : "toto"
+    },
+    {
+      "nom" : "Tata",
+      "role" : "responsable",
+      "mdp" : "tata"
+    },
+    {
+      "nom" : "Titi",
+      "role" : "drh",
+      "mdp" : "titi"
+    }
+  ]
+}
