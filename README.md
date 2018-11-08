@@ -1,5 +1,4 @@
 # gta-ynov-vue
-
 https://clementcaillaud.github.io/gta-ynov-vue/
 
 ## Project setup
@@ -21,3 +20,11 @@ npm run build
 ```
 npm run deploy
 ```
+
+### Suivi du projet
+Taches à réaliser : 
+https://trello.com/b/g26tB7Dc/gta-ynov-vue
+```
+08/11/2018
+```
+Objectif: Page d'accueil, connexion + première ébauche des pages Fiche salarié, Tableau de Bord et Planning avec du contenu statique
