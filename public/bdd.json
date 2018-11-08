@@ -2,17 +2,29 @@
   "utilisateurs":
   [
     {
-      "nom" : "Toto",
+      "login" : "Toto",
+      "prenom" : "Toto",
+      "nom" : "Zero",
       "role" : "salarie",
-      "mdp" : "toto"
+      "mdp" : "toto",
+      "dateNaissance" : "04/03/1990",
+      "adresse" : "Pas très loin d'ici",
+      "tel" : "0600000000",
+      "mail" : "toto@zero.com"
     },
     {
-      "nom" : "Tata",
+      "login" : "Tata",
+      "prenom" : "Tata",
+      "nom" : "Zero",
       "role" : "responsable",
-      "mdp" : "tata"
+      "mdp" : "tata",
+      "dateNaissance" : "24/10/1984",
+      "adresse" : "Là bas",
+      "tel" : "0660066006",
+      "mail" : "tata@zero.com"
     },
     {
-      "nom" : "Titi",
+      "login" : "Titi",
       "role" : "drh",
       "mdp" : "titi"
     }

@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <b-form class="col-md-6">
         <b-form-group>
-          <b-form-input type="text" class="form-control" placeholder="Utilisateur" v-model="nom"></b-form-input>
+          <b-form-input type="text" class="form-control" placeholder="Utilisateur" v-model="login"></b-form-input>
         </b-form-group>
         <b-form-group>
           <b-form-input type="password" class="form-control" placeholder="Mot de passe" v-model="mdp" :state="etatInput"></b-form-input>
@@ -24,7 +24,7 @@
     data: function()
     {
       return{
-        nom: "",
+        login: "",
         mdp: "",
         etatInput: null
       };
@@ -33,11 +33,14 @@
     {
       seConnecter: async function()
       {
-        var identifiantsOK = await API.verifierAuthentification(this.nom, this.mdp);
-        //var utilisateurBDD = await BDD.getUser(this.nom);
-        if(identifiantsOK)//utilisateurBDD.nom == this.nom && utilisateurBDD.mdp == this.mdp)
+        //On vérifie côté "serveur" que le login et le mdp sont bons
+        var identifiantsOK = await API.verifierAuthentification(this.login, this.mdp);
+
+        if(identifiantsOK)
         {
-          this.$router.push("about");
+          //Sauvegarde locale du login et redirection vers la page principale
+          this.$parent.$parent.$parent.loginUtilisateur = this.login;
+          this.$router.push("gta");
         }
         else
         {
