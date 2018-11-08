@@ -14,19 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "/gta-ynov-vue/precache-manifest.4215ec0ee3903223b87f2754b21bb54c.js"
-=======
-  "/gta-ynov-vue/precache-manifest.0791dff3c7b1f047be9293f99863dede.js"
->>>>>>> 027438e... Initialisation de l'appli
-=======
-  "/gta-ynov-vue/precache-manifest.7e804e1d94ffbcdb9881594f748e0e69.js"
->>>>>>> 56753bd... Test déploiement
-=======
-  "/gta-ynov-vue/precache-manifest.0791dff3c7b1f047be9293f99863dede.js"
->>>>>>> 78e885f... Build & deploy
+  "/gta-ynov-vue/precache-manifest.6e199f9661ea7fad0c19790d1b66e63b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "gta-ynov-vue"});

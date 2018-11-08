@@ -5,17 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "lint": "vue-cli-service lint"
-=======
     "lint": "vue-cli-service lint",
     "deploy": "copyfiles -u 1 dist/**/* docs"
->>>>>>> 027438e... Initialisation de l'appli
-=======
-    "lint": "vue-cli-service lint",
-    "deploy": "copyfiles -u 1 dist/**/* docs"
->>>>>>> 56753bd... Test déploiement
   },
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.11",
@@ -29,14 +20,7 @@
     "@vue/cli-plugin-pwa": "^3.1.1",
     "@vue/cli-service": "^3.1.1",
     "babel-eslint": "^10.0.1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     "copyfiles": "^2.1.0",
->>>>>>> 027438e... Initialisation de l'appli
-=======
-    "copyfiles": "^2.1.0",
->>>>>>> 56753bd... Test déploiement
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
     "vue-template-compiler": "^2.5.17"

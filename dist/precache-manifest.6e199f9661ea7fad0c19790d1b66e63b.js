@@ -8,15 +8,15 @@ self.__precacheManifest = [
     "url": "/gta-ynov-vue/js/chunk-vendors.df2dc307.js"
   },
   {
-    "revision": "73cdd6d005df41a6ae47",
-    "url": "/gta-ynov-vue/js/app.5d05532e.js"
+    "revision": "c84680193b6110938791",
+    "url": "/gta-ynov-vue/js/app.d7baaf36.js"
   },
   {
     "revision": "0a7712fafb6e63d122ba",
     "url": "/gta-ynov-vue/js/about.74e759b6.js"
   },
   {
-    "revision": "0b88cce94d24b2db9b11cea138f17af3",
+    "revision": "e6733326031b6de6123ed41769dc609a",
     "url": "/gta-ynov-vue/index.html"
   },
   {
@@ -28,7 +28,7 @@ self.__precacheManifest = [
     "url": "/gta-ynov-vue/css/chunk-vendors.64476bcb.css"
   },
   {
-    "revision": "73cdd6d005df41a6ae47",
+    "revision": "c84680193b6110938791",
     "url": "/gta-ynov-vue/css/app.4912ae7b.css"
   }
 ];

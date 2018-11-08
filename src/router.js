@@ -5,15 +5,7 @@ import Home from './views/Home.vue'
 Vue.use(Router)
 
 export default new Router({
-<<<<<<< HEAD
-<<<<<<< HEAD
-  mode: 'history',
-=======
   mode: 'hash',
->>>>>>> 027438e... Initialisation de l'appli
-=======
-  mode: 'hash',
->>>>>>> 4dadf5f... Config mode router
   base: process.env.BASE_URL,
   routes: [
     {
