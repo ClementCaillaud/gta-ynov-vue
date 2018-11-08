@@ -21,9 +21,22 @@ npm run build
 npm run deploy
 ```
 
-### Suivi du projet
-Taches à réaliser : 
-https://trello.com/b/g26tB7Dc/gta-ynov-vue
+## Identification
+Accès salarié :
+```
+login: Toto mdp: toto
+```
+Accès responsable d'équipe :
+```
+login: Tata mdp: tata
+```
+Accès DRH :
+```
+login: Titi mdp: titi
+```
+
+## Suivi du projet
+Taches à réaliser : https://trello.com/b/g26tB7Dc/gta-ynov-vue
 ```
 08/11/2018
 ```
