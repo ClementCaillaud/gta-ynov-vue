@@ -40,6 +40,10 @@
     },
     created: async function()
     {
+      if(this.$parent.$parent.loginUtilisateur == "")
+      {
+        this.$router.push({name: "accueil"});
+      }
       //Récupération de l'utilisateur
       var utilisateur = await API.getUser(this.$parent.$parent.loginUtilisateur);
       //Chargement des pages en fonction du rôle

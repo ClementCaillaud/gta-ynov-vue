@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <b-form class="col-md-6">
+      <div class="col-md-6">
         <b-form-group>
           <b-form-input type="text" class="form-control" placeholder="Utilisateur" v-model="login"></b-form-input>
         </b-form-group>
@@ -10,7 +10,7 @@
           <b-form-invalid-feedback>Identifiant et/ou mot de passe incorrect(s)</b-form-invalid-feedback>
         </b-form-group>
         <button type="submit" class="btn btn-primary" v-on:click="seConnecter()">Connexion</button>
-      </b-form>
+      </div>
     </div>
   </div>
 </template>
@@ -40,7 +40,7 @@
         {
           //Sauvegarde locale du login et redirection vers la page principale
           this.$parent.$parent.$parent.loginUtilisateur = this.login;
-          this.$router.push("gta");
+          this.$router.push({name: "gta"});
         }
         else
         {
