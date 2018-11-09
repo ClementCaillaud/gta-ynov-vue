@@ -40,7 +40,7 @@
         {
           //Sauvegarde locale du login et redirection vers la page principale
           this.$parent.$parent.$parent.loginUtilisateur = this.login;
-          this.$router.push({path: "/gta"});
+          this.$router.push({name: "gta"});
         }
         else
         {
