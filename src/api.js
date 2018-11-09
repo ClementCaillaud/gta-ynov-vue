@@ -8,7 +8,7 @@ export default
    */
   getData: async function()
   {
-    return await Axios.get("/bdd.json");
+    return await Axios.get("bdd.json");
   },
   /**
    * Récupérer les informations d'un utilisateur, dont le mot de passe
