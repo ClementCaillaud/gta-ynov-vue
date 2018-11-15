@@ -55,3 +55,5 @@ Bilan: Résolution de divers bug (accès au json, bug avec un formulaire, ...). 
 15/11/2018
 ```
 Objectif: Consultation et modification de la fiche salarié. Consulatiton du planning.
+
+Bilan: Lecture et modifications des données du salarié. Pas d'enregistrement vers la BDD (json) pour le moment, les données modifiées sont enregistrées en local. Lecture et affichage du planning sous forme de card, avec un code couleur différent en fonction du type d'occupation. Adaptation de l'affichage en fonction du type d'écran.

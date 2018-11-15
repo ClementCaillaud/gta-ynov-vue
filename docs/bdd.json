@@ -10,7 +10,70 @@
       "dateNaissance" : "04/03/1990",
       "adresse" : "Pas très loin d'ici",
       "tel" : "0600000000",
-      "mail" : "toto@zero.com"
+      "mail" : "toto@zero.com",
+      "agenda" :
+      [
+        {
+          "date": "09/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "08:00",
+              "heureFin": "12:00",
+              "type": "Travail"
+            },
+            {
+              "heureDebut": "13:30",
+              "heureFin": "18:00",
+              "type": "Travail"
+            }
+          ]
+        },
+        {
+          "date": "10/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "08:00",
+              "heureFin": "18:00",
+              "type": "Congé"
+            }
+          ]
+        },
+        {
+          "date": "12/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "08:00",
+              "heureFin": "18:00",
+              "type": "Congé"
+            }
+          ]
+        },
+        {
+          "date": "13/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "08:00",
+              "heureFin": "18:00",
+              "type": "Congé"
+            }
+          ]
+        },
+        {
+          "date": "14/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "08:00",
+              "heureFin": "18:00",
+              "type": "Congé"
+            }
+          ]
+        }
+      ]
     },
     {
       "login" : "Tata",
