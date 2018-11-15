@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/gta-ynov-vue/precache-manifest.a292ca74b22dbb8b67d037ce90b27ba8.js"
+  "/gta-ynov-vue/precache-manifest.ea322ca4b0795d0538ac4b80fe816e81.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "gta-ynov-vue"});

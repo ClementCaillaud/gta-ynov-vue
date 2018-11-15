@@ -48,3 +48,10 @@ Bilan: Page d'accueil et connexion fonctionnelles. Création d'une base de donn�
 09/11/2018
 ```
 Objectif: Terminer la structure des pages commencées hier. Lire et modifier les données de la fiche salarié. Commencer l'affichage du planning.
+
+Bilan: Résolution de divers bug (accès au json, bug avec un formulaire, ...). Expérimentation de plusieurs solutions déjà existantes pour la mise en place du planning avant de finalement décider de concevoir mon propore système de planning. Tâche commencée le matin mais pas eu le temps de continuer l'après-midi.
+
+```
+15/11/2018
+```
+Objectif: Consultation et modification de la fiche salarié. Consulatiton du planning.
