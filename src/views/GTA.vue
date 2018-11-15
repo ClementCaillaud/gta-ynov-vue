@@ -45,9 +45,9 @@
         this.$router.push({name: "accueil"});
       }
       //Récupération de l'utilisateur
-      var utilisateur = await API.getUser(this.$parent.$parent.loginUtilisateur);
+      this.utilisateur = await API.getUser(this.$parent.$parent.loginUtilisateur);
       //Chargement des pages en fonction du rôle
-      switch (utilisateur.role)
+      switch (this.utilisateur.role)
       {
         case "salarie":
           this.tabs = [

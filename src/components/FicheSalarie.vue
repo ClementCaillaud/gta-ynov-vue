@@ -1,36 +1,77 @@
 <template>
   <b-container>
+    <!-- INFOS SAUVEGARDE -->
+    <b-alert :show="succesSauvegarde" variant="success" dismissible @dismissed="succesSauvegarde=false">Vos données ont été mises à jour</b-alert>
+
+    <!-- FORMUALIRE -->
     <b-row>
       <b-col md="6">
         <b-form-group label="Nom">
-          <b-form-input></b-form-input>
+          <b-form-input type="text" v-model="infos.nom"></b-form-input>
         </b-form-group>
         <b-form-group label="Prénom">
-          <b-form-input></b-form-input>
+          <b-form-input type="text" v-model="infos.prenom"></b-form-input>
         </b-form-group>
         <b-form-group label="Date de naissance">
-          <b-form-input></b-form-input>
+          <b-form-input type="text" v-model="infos.dateNaissance"></b-form-input>
         </b-form-group>
       </b-col>
       <b-col md="6">
         <b-form-group label="Adresse">
-          <b-form-input></b-form-input>
+          <b-form-input type="text" v-model="infos.adresse"></b-form-input>
         </b-form-group>
         <b-form-group label="N° téléphone">
-          <b-form-input></b-form-input>
+          <b-form-input type="text" v-model="infos.tel"></b-form-input>
         </b-form-group>
         <b-form-group label="Mail">
-          <b-form-input></b-form-input>
+          <b-form-input type="text" v-model="infos.mail"></b-form-input>
         </b-form-group>
       </b-col>
     </b-row>
-    <button class="btn btn-success">Enregistrer modifications</button>
+
+    <!--BOUTONS-->
+    <button class="btn btn-danger" v-on:click="reset()">Annuler</button>
+    <button class="btn btn-success ml-5" v-on:click="enregistrer()">Enregistrer</button>
   </b-container>
 </template>
 
 <script>
   export default
   {
-    name: "FicheSalarie"
+    name: "FicheSalarie",
+    data: function()
+    {
+      return{
+        infos:{},
+        succesSauvegarde: false
+      }
+    },
+    methods:
+    {
+      enregistrer: function()
+      {
+        for(var champ in this.infos)
+        {
+          this.$parent.utilisateur[champ] = this.infos[champ];
+        }
+        this.succesSauvegarde = true;
+      },
+      reset: function()
+      {
+        this.infos =
+        {
+          nom: this.$parent.utilisateur.nom,
+          prenom: this.$parent.utilisateur.prenom,
+          dateNaissance: this.$parent.utilisateur.dateNaissance,
+          adresse: this.$parent.utilisateur.adresse,
+          tel: this.$parent.utilisateur.tel,
+          mail: this.$parent.utilisateur.mail
+        };
+      }
+    },
+    created: function()
+    {
+      this.reset();
+    }
   }
 </script>
