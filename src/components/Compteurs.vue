@@ -2,15 +2,26 @@
 
     <b-tabs pills card>
       <b-tab title="Jour" active>
-        Compteurs quotidiens
-        <div v-for="journee in compteursQuotidien">
-          {{journee.date}}
-          {{journee.heures}}
-          {{journee.minutes}}
-        </div>
+        <b-row>
+          <b-col class="compteur" v-for="journee in compteursQuotidien">
+            <div class="bg-primary text-white mb-1">{{journee.date}}</div>
+            <div>
+              {{journee.heures}}h
+              <span v-if="journee.minutes != 0">{{journee.minutes}}</span>
+            </div>
+          </b-col>
+        </b-row>
       </b-tab>
       <b-tab title="Semaine">
-        Compteurs hebdomadaires
+        <b-row>
+          <b-col class="compteur" v-for="semaine in compteurHebdomadaire">
+            <div class="bg-primary text-white mb-1">{{semaine.numSemaine}}</div>
+            <div>
+              {{semaine.heures}}h
+              <span v-if="semaine.minutes != 0">{{semaine.minutes}}</span>
+            </div>
+          </b-col>
+        </b-row>
       </b-tab>
       <b-tab title="Année">
         Compteurs annuels
@@ -62,11 +73,52 @@
           });
         });
         return compteurs;
+      },
+      compteurHebdomadaire: function()
+      {
+        var compteursQuotidien = this.compteursQuotidien;
+        var compteurs = [];
+        var compteursTemp = [];
+
+        //Regroupement par semaine
+        compteursQuotidien.forEach(function(journee)
+        {
+          var semaine = moment(journee.date, "DD/MM/YYYY").week();
+          if(compteursTemp[semaine] === undefined)
+          {
+            compteursTemp[semaine] = [];
+          }
+          compteursTemp[semaine].push(journee);
+        });
+
+        //Calcul des durées
+        compteursTemp.forEach(function(semaine, numSemaine)
+        {
+          var duree = moment("00:00", "HH:mm");
+          semaine.forEach(function(jour)
+          {
+            duree.add(jour.heures, "h");
+            duree.add(jour.minutes, "m");
+          });
+          compteurs.push({
+            numSemaine: numSemaine,
+            heures: duree.hours(),
+            minutes: duree.minutes()
+          });
+        });
+        return compteurs;
       }
     }
   }
 </script>
 
 <style scoped>
+  .compteur-ok
+  {
 
+  }
+  .compteur-pas-ok
+  {
+
+  }
 </style>
