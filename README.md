@@ -64,3 +64,8 @@ Bilan: Lecture et modifications des données du salarié. Pas d'enregistrement v
 Objectif: Terminer l'affichage du planning et des occupations. Ajouter les compteurs d'heures. Commencer la page Tableau de Bord.
 
 Bilan: Affichage du planning avec un code couleur en fonction du type d'occupation. Compteurs d'heures quotidien et hebdomadaire, pas encore de design. Travail seulement le matin.
+
+```
+22/11/2018
+```
+Objectif: Terminer les compteurs horaires. Pour le responsable d'équipe, consulter et modifier le planning des membres de son équipe.
