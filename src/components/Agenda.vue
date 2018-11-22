@@ -1,7 +1,8 @@
 <template>
+
   <b-row class="justify-content-center">
     <!-- Une journée -->
-    <b-col v-for="jour in agenda" class="mb-3">
+    <b-col v-for="jour in agenda" class="mb-3" v-if="filtreDate(jour)">
       <div class="bg-primary text-white mb-1">{{jour.date}}</div>
       <b-card-group class="justify-content-center">
         <b-row>
@@ -21,6 +22,8 @@
 </template>
 
 <script>
+  import moment from 'moment'
+
   export default
   {
     name: "Agenda",
@@ -29,6 +32,11 @@
       return{
         agenda: this.$parent.$parent.utilisateur.agenda
       };
+    },
+    computed:
+    {
+      dateDebut: function(){return this.$parent.filtreDateDebut;},
+      dateFin: function(){return this.$parent.filtreDateFin;}
     },
     methods:
     {
@@ -44,6 +52,15 @@
           case "Récupération": return "recuperation";
           default: return "";
         }
+      },
+      filtreDate: function(jour)
+      {
+        if((moment(jour.date, "DD/MM/YYYY").diff(moment(this.dateDebut, "YYYY-MM-DD"), "days") >= 0 || this.dateDebut == '')
+          &&  (moment(jour.date, "DD/MM/YYYY").diff(moment(this.dateFin, "YYYY-MM-DD"), "days") <= 0|| this.dateFin == ''))
+        {
+          return true;
+        }
+        return false;
       }
     }
   }

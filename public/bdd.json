@@ -112,6 +112,33 @@
               "type": "Récupération"
             }
           ]
+        },
+        {
+          "date": "17/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "03:30",
+              "heureFin": "12:00",
+              "type": "Travail"
+            },
+            {
+              "heureDebut": "12:30",
+              "heureFin": "23:30",
+              "type": "Travail"
+            }
+          ]
+        },
+        {
+          "date": "18/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "",
+              "heureFin": "",
+              "type": "Repos hebdomadaire"
+            }
+          ]
         }
       ]
     },
