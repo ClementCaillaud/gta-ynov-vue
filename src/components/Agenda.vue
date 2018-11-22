@@ -1,37 +1,40 @@
 <template>
-  <b-row class="justify-content-center">
-    <!-- Une journée -->
-    <b-col v-for="jour in agenda" class="mb-3">
-      <div class="bg-primary text-white mb-1">{{jour.date}}</div>
-      <b-card-group class="justify-content-center">
-        <b-row>
-          <!-- Les occupations de la journée -->
-          <b-col v-for="activite in jour.occupation">
-            <b-card :class="classDynamique(activite.type)">
-              <b-col>{{activite.heureDebut}}</b-col>
-              <b-col> {{activite.heureFin}}</b-col>
-              <b-col>{{activite.type}}</b-col>
-              <b-col >{{activite.motif}}</b-col>
-            </b-card>
-          </b-col>
-        </b-row>
-      </b-card-group>
-    </b-col>
-  </b-row>
+  <div>
+    <b-row class="justify-content-center">
+      <!-- Une journée -->
+      <b-col v-for="jour in agenda" class="mb-3" v-if="filtreDate(jour)">
+        <div class="bg-primary text-white mb-1">{{jour.date}}</div>
+        <b-card-group class="justify-content-center">
+          <b-row>
+            <!-- Les occupations de la journée -->
+            <b-col v-for="activite in jour.occupation">
+              <b-card :class="classDynamique(activite.type)">
+                <b-col>{{activite.heureDebut}}</b-col>
+                <b-col> {{activite.heureFin}}</b-col>
+                <b-col>{{activite.type}}</b-col>
+                <b-col >{{activite.motif}}</b-col>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-card-group>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
+  import moment from 'moment'
+
   export default
   {
-    name: "Agenda",
-    data: function()
-    {
-      return{
-        agenda: this.$parent.$parent.utilisateur.agenda
-      };
-    },
+    props:['agenda', 'dateDebut', 'dateFin', 'droits'],
     methods:
     {
+      /**
+       * Détermine la classe CSS à utiliser en fonction du type d'occupation
+       * @param  {String} type Le type d'occupation
+       * @return {String}      Le nom de la classe à utiliser
+       */
       classDynamique: function(type)
       {
         switch(type)
@@ -44,6 +47,20 @@
           case "Récupération": return "recuperation";
           default: return "";
         }
+      },
+      /**
+       * Filtre les journées en fonction des datepickers
+       * @param  {Object} jour Le jour de l'agenda
+       * @return {boolean}      TRUE si on doit afficher cette journée, FALSE sinon
+       */
+      filtreDate: function(jour)
+      {
+        if((moment(jour.date, "DD/MM/YYYY").diff(moment(this.dateDebut, "YYYY-MM-DD"), "days") >= 0 || this.dateDebut == '')
+          &&  (moment(jour.date, "DD/MM/YYYY").diff(moment(this.dateFin, "YYYY-MM-DD"), "days") <= 0|| this.dateFin == ''))
+        {
+          return true;
+        }
+        return false;
       }
     }
   }

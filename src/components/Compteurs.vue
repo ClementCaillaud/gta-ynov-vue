@@ -1,30 +1,43 @@
 <template>
 
     <b-tabs pills card>
+      <!-- Compteurs quotidiens -->
       <b-tab title="Jour" active>
         <b-row>
           <b-col class="compteur" v-for="journee in compteursQuotidien">
             <div class="bg-primary text-white mb-1">{{journee.date}}</div>
-            <div>
+            <div :class="classCompteur('quotidien', journee)">
               {{journee.heures}}h
               <span v-if="journee.minutes != 0">{{journee.minutes}}</span>
             </div>
           </b-col>
         </b-row>
       </b-tab>
+
+      <!-- Compteurs hebdomadaires -->
       <b-tab title="Semaine">
         <b-row>
-          <b-col class="compteur" v-for="semaine in compteurHebdomadaire">
+          <b-col class="compteur" v-for="semaine in compteursHebdomadaire">
             <div class="bg-primary text-white mb-1">{{semaine.numSemaine}}</div>
-            <div>
+            <div :class="classCompteur('hebdomadaire', semaine)">
               {{semaine.heures}}h
               <span v-if="semaine.minutes != 0">{{semaine.minutes}}</span>
             </div>
           </b-col>
         </b-row>
       </b-tab>
+
+      <!-- Compteurs annuels -->
       <b-tab title="Année">
-        Compteurs annuels
+        <b-row>
+          <b-col class="compteur" v-for="annee in compteursAnnuel">
+            <div class="bg-primary text-white mb-1">{{annee.numAnnee}}</div>
+            <div :class="classCompteur('annuel', annee)">
+              {{annee.heures}}h
+              <span v-if="annee.minutes != 0">{{annee.minutes}}</span>
+            </div>
+          </b-col>
+        </b-row>
       </b-tab>
     </b-tabs>
 
@@ -35,13 +48,7 @@
 
   export default
   {
-    name: "Compteurs",
-    data: function()
-    {
-      return{
-        agenda: this.$parent.$parent.utilisateur.agenda
-      };
-    },
+    props:['agenda', 'dateDebut', 'dateFin'],
     computed:
     {
       /**
@@ -51,30 +58,43 @@
       compteursQuotidien: function()
       {
         var compteurs = [];
+        var self = this;
         //Pour chaque jour
         this.agenda.forEach(function(journee)
         {
-          var duree = moment("00:00", "HH:mm");
-          //On regarde chaque occupation
-          journee.occupation.forEach(function(occupation)
+          if(self.filtreDate(journee))
           {
-            //On ajoute le temps de travail au compteur
-            if(occupation.type == "Travail")
+            var duree = {heures:0, minutes:0};
+            //On regarde chaque occupation
+            journee.occupation.forEach(function(occupation)
             {
-              var dureeTravail = moment.duration(moment(occupation.heureFin, "HH:mm").diff(moment(occupation.heureDebut, "HH:mm")));
-              duree.add(dureeTravail.hours(), "h");
-              duree.add(dureeTravail.minutes(), "m");
-            }
-          });
-          compteurs.push({
-            date: journee.date,
-            heures: duree.hours(),
-            minutes: duree.minutes()
-          });
+              //On ajoute le temps de travail au compteur
+              if(occupation.type == "Travail")
+              {
+                var dureeTravail = moment.duration(moment(occupation.heureFin, "HH:mm").diff(moment(occupation.heureDebut, "HH:mm")));
+                duree.heures += dureeTravail.hours();
+                duree.minutes += dureeTravail.minutes();
+                if(duree.minutes >= 60)
+                {
+                  duree.heures += parseInt(duree.minutes / 60);
+                  duree.minutes %= 60;
+                }
+              }
+            });
+            compteurs.push({
+              date: journee.date,
+              heures: duree.heures,
+              minutes: duree.minutes
+            });
+          }
         });
         return compteurs;
       },
-      compteurHebdomadaire: function()
+      /**
+       * Retourne les compteurs de travail hebdomadaires
+       * @return {Array} Les compteurs hebdomadaires
+       */
+      compteursHebdomadaire: function()
       {
         var compteursQuotidien = this.compteursQuotidien;
         var compteurs = [];
@@ -94,19 +114,109 @@
         //Calcul des durées
         compteursTemp.forEach(function(semaine, numSemaine)
         {
-          var duree = moment("00:00", "HH:mm");
+          var duree = {heures:0, minutes:0};
           semaine.forEach(function(jour)
           {
-            duree.add(jour.heures, "h");
-            duree.add(jour.minutes, "m");
+            duree.heures += jour.heures;
+            duree.minutes += jour.minutes;
+            if(duree.minutes >= 60)
+            {
+              duree.heures += parseInt(duree.minutes / 60);
+              duree.minutes %= 60;
+            }
           });
           compteurs.push({
             numSemaine: numSemaine,
-            heures: duree.hours(),
-            minutes: duree.minutes()
+            heures: duree.heures,
+            minutes: duree.minutes
           });
         });
         return compteurs;
+      },
+      /**
+       * Retourne les compteurs de travail annuels
+       * @return {Array} Les compteurs annuels
+       */
+      compteursAnnuel: function()
+      {
+        var compteursQuotidien = this.compteursQuotidien;
+        var compteurs = [];
+        var compteursTemp = [];
+
+        //Regroupement par année
+        compteursQuotidien.forEach(function(journee)
+        {
+          var annee = moment(journee.date, "DD/MM/YYYY").year();
+          if(compteursTemp[annee] === undefined)
+          {
+            compteursTemp[annee] = [];
+          }
+          compteursTemp[annee].push(journee);
+        });
+
+        //Calcul des durées
+        compteursTemp.forEach(function(annee, numAnnee)
+        {
+          var duree = {heures:0, minutes:0};
+          annee.forEach(function(jour)
+          {
+            duree.heures += jour.heures;
+            duree.minutes += jour.minutes;
+            if(duree.minutes >= 60)
+            {
+              duree.heures += parseInt(duree.minutes / 60);
+              duree.minutes %= 60;
+            }
+          });
+          compteurs.push({
+            numAnnee: numAnnee,
+            heures: duree.heures,
+            minutes: duree.minutes
+          });
+        });
+        return compteurs;
+      }
+    },
+    methods:
+    {
+      /**
+       * Permet de changer la couleur du compteur lorsque le nombre d'heures est trop élevé
+       * @param  {Strign} type     Le type de compteur (quotidien, hebdomadaire ou annuel)
+       * @param  {Object} compteur Le nombre d'heures et minutes de ce compteur
+       * @return {String}          Le nom de la classe CSS à utiliser
+       */
+      classCompteur: function(type, compteur)
+      {
+        var seuil = 0;
+
+        switch(type)
+        {
+          case "quotidien": seuil = 12;
+            break;
+          case "hebdomadaire": seuil = 44;
+            break;
+          default: return "compteur-ok";
+        }
+
+        if(compteur.heures > seuil)
+        {
+          return "compteur-pas-ok";
+        }
+        return "compteur-ok";
+      },
+      /**
+       * Permet de filtrer les journées à prendre en compte dans les compteurs
+       * @param  {Object} jour La journée
+       * @return {boolean}     TRUE si on doit en tenir compte, FALSE sinon
+       */
+      filtreDate: function(jour)
+      {
+        if((moment(jour.date, "DD/MM/YYYY").diff(moment(this.dateDebut, "YYYY-MM-DD"), "days") >= 0 || this.dateDebut == '')
+          &&  (moment(jour.date, "DD/MM/YYYY").diff(moment(this.dateFin, "YYYY-MM-DD"), "days") <= 0|| this.dateFin == ''))
+        {
+          return true;
+        }
+        return false;
       }
     }
   }
@@ -119,6 +229,7 @@
   }
   .compteur-pas-ok
   {
-
+    background-color: #b90505;
+    color: white;
   }
 </style>

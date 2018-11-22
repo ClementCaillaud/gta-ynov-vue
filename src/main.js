@@ -13,9 +13,5 @@ Vue.use(ToggleButton);
 
 new Vue({
   router,
-  data:
-  {
-    loginUtilisateur: ""
-  },
   render: h => h(App)
 }).$mount('#app')

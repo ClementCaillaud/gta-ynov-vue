@@ -20,7 +20,6 @@
 
   export default
   {
-    name: "Connexion",
     data: function()
     {
       return{
@@ -31,6 +30,9 @@
     },
     methods:
     {
+      /**
+       * Tentative de connexion
+       */
       seConnecter: async function()
       {
         //On vérifie côté "serveur" que le login et le mdp sont bons
@@ -39,7 +41,7 @@
         if(identifiantsOK)
         {
           //Sauvegarde locale du login et redirection vers la page principale
-          this.$parent.$parent.$parent.loginUtilisateur = this.login;
+          this.$parent.$emit('connexion', this.login);
           this.$router.push({name: "gta"});
         }
         else

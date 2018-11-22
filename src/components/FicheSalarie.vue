@@ -38,38 +38,46 @@
 <script>
   export default
   {
-    name: "FicheSalarie",
+    props:['utilisateur'],
     data: function()
     {
       return{
-        infos:{},
-        succesSauvegarde: false
+        succesSauvegarde: false,
+        infos: {}
       }
     },
     methods:
     {
+      /**
+       * Enregistre les modifications effectuées
+       */
       enregistrer: function()
       {
         for(var champ in this.infos)
         {
-          this.$parent.utilisateur[champ] = this.infos[champ];
+          this.utilisateur[champ] = this.infos[champ];
         }
+        //Evenement pour mettre à jour l'utilisateur dans toute l'appli
+        this.$parent.$emit("modifInfos", this.utilisateur);
         this.succesSauvegarde = true;
       },
+      /**
+       * Annule les modifications et réinitialise les données originales
+       */
       reset: function()
       {
         this.infos =
         {
-          nom: this.$parent.utilisateur.nom,
-          prenom: this.$parent.utilisateur.prenom,
-          dateNaissance: this.$parent.utilisateur.dateNaissance,
-          adresse: this.$parent.utilisateur.adresse,
-          tel: this.$parent.utilisateur.tel,
-          mail: this.$parent.utilisateur.mail
+          nom: this.utilisateur.nom,
+          prenom: this.utilisateur.prenom,
+          dateNaissance: this.utilisateur.dateNaissance,
+          adresse: this.utilisateur.adresse,
+          tel: this.utilisateur.tel,
+          mail: this.utilisateur.mail
         };
       }
     },
-    created: function()
+    created:function()
     {
       this.reset();
     }

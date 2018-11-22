@@ -11,14 +11,9 @@
   import Connexion from "@/components/Connexion.vue";
   export default
   {
-    name: "accueil",
     components:
     {
       Connexion
-    },
-    created: function()
-    {
-      this.$parent.$parent.loginUtilisateur = "";
     }
   }
 </script>
