@@ -1,7 +1,7 @@
 <template>
   <b-container>
-    <!-- Filtres -->
     <b-row align-v="center" class="mb-2">
+      <!-- Filtres -->
       <b-col>
         <b-form-group label="Date début">
           <b-form-input type="date" v-model="filtreDateDebut"></b-form-input>
@@ -12,6 +12,8 @@
           <b-form-input type="date" v-model="filtreDateFin"></b-form-input>
         </b-form-group>
       </b-col>
+      
+      <!-- Basculer du mode Agenda au mode Compteur -->
       <b-col md="4">
         <toggle-button id="changed-font"
           :color="{checked: '#3c9631', unchecked: '#388371'}"
@@ -35,7 +37,6 @@
 
   export default
   {
-    name: "Planning",
     props:["utilisateur"],
     data: function()
     {

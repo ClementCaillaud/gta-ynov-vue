@@ -20,7 +20,6 @@
 
   export default
   {
-    name: "Connexion",
     data: function()
     {
       return{
@@ -31,6 +30,9 @@
     },
     methods:
     {
+      /**
+       * Tentative de connexion
+       */
       seConnecter: async function()
       {
         //On vérifie côté "serveur" que le login et le mdp sont bons

@@ -26,10 +26,14 @@
 
   export default
   {
-    name: "Agenda",
     props:['agenda', 'dateDebut', 'dateFin'],
     methods:
     {
+      /**
+       * Détermine la classe CSS à utiliser en fonction du type d'occupation
+       * @param  {String} type Le type d'occupation
+       * @return {String}      Le nom de la classe à utiliser
+       */
       classDynamique: function(type)
       {
         switch(type)
@@ -43,6 +47,11 @@
           default: return "";
         }
       },
+      /**
+       * Filtre les journées en fonction des datepickers
+       * @param  {Object} jour Le jour de l'agenda
+       * @return {boolean}      TRUE si on doit afficher cette journée, FALSE sinon
+       */
       filtreDate: function(jour)
       {
         if((moment(jour.date, "DD/MM/YYYY").diff(moment(this.dateDebut, "YYYY-MM-DD"), "days") >= 0 || this.dateDebut == '')

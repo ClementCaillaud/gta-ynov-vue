@@ -143,6 +143,47 @@
       ]
     },
     {
+      "login" : "Tutu",
+      "prenom" : "Tutu",
+      "nom" : "Zero",
+      "role" : "salarie",
+      "mdp" : "tutu",
+      "dateNaissance" : "16/10/1993",
+      "adresse" : "Au bout de la rue",
+      "tel" : "0666666666",
+      "mail" : "tutu@zero.com",
+      "agenda" :
+      [
+        {
+          "date": "09/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "09:00",
+              "heureFin": "12:30",
+              "type": "Travail"
+            },
+            {
+              "heureDebut": "13:30",
+              "heureFin": "16:45",
+              "type": "Travail"
+            }
+          ]
+        },
+        {
+          "date": "10/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "",
+              "heureFin": "",
+              "type": "Repos hebdomadaire"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "login" : "Tata",
       "prenom" : "Tata",
       "nom" : "Zero",
@@ -170,7 +211,8 @@
             }
           ]
         }
-      ]
+      ],
+      "equipe": ["Toto", "Tutu"]
     },
     {
       "login" : "Titi",

@@ -1,6 +1,7 @@
 <template>
 
     <b-tabs pills card>
+      <!-- Compteurs quotidiens -->
       <b-tab title="Jour" active>
         <b-row>
           <b-col class="compteur" v-for="journee in compteursQuotidien">
@@ -12,6 +13,8 @@
           </b-col>
         </b-row>
       </b-tab>
+
+      <!-- Compteurs hebdomadaires -->
       <b-tab title="Semaine">
         <b-row>
           <b-col class="compteur" v-for="semaine in compteursHebdomadaire">
@@ -23,6 +26,8 @@
           </b-col>
         </b-row>
       </b-tab>
+
+      <!-- Compteurs annuels -->
       <b-tab title="Année">
         <b-row>
           <b-col class="compteur" v-for="annee in compteursAnnuel">
@@ -43,7 +48,6 @@
 
   export default
   {
-    name: "Compteurs",
     props:['agenda', 'dateDebut', 'dateFin'],
     computed:
     {
@@ -86,6 +90,10 @@
         });
         return compteurs;
       },
+      /**
+       * Retourne les compteurs de travail hebdomadaires
+       * @return {Array} Les compteurs hebdomadaires
+       */
       compteursHebdomadaire: function()
       {
         var compteursQuotidien = this.compteursQuotidien;
@@ -125,6 +133,10 @@
         });
         return compteurs;
       },
+      /**
+       * Retourne les compteurs de travail annuels
+       * @return {Array} Les compteurs annuels
+       */
       compteursAnnuel: function()
       {
         var compteursQuotidien = this.compteursQuotidien;
@@ -167,6 +179,12 @@
     },
     methods:
     {
+      /**
+       * Permet de changer la couleur du compteur lorsque le nombre d'heures est trop élevé
+       * @param  {Strign} type     Le type de compteur (quotidien, hebdomadaire ou annuel)
+       * @param  {Object} compteur Le nombre d'heures et minutes de ce compteur
+       * @return {String}          Le nom de la classe CSS à utiliser
+       */
       classCompteur: function(type, compteur)
       {
         var seuil = 0;
@@ -186,6 +204,11 @@
         }
         return "compteur-ok";
       },
+      /**
+       * Permet de filtrer les journées à prendre en compte dans les compteurs
+       * @param  {Object} jour La journée
+       * @return {boolean}     TRUE si on doit en tenir compte, FALSE sinon
+       */
       filtreDate: function(jour)
       {
         if((moment(jour.date, "DD/MM/YYYY").diff(moment(this.dateDebut, "YYYY-MM-DD"), "days") >= 0 || this.dateDebut == '')

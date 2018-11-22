@@ -13,11 +13,12 @@
           >
             {{tab.nom}}
           </b-nav-item>
+          <b-nav-item v-on:click="deconnexion()">Se déconnecter</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
     <component
-      class="mt-5" 
+      class="mt-5"
       v-bind:is="currentTab.component"
       v-bind:utilisateur="utilisateur"
       v-on:modifInfos="utilisateur = $event"
@@ -31,10 +32,10 @@
   import FicheSalarie from '@/components/FicheSalarie.vue'
   import Planning from '@/components/Planning.vue'
   import TableauDeBord from '@/components/TableauDeBord.vue'
+  import Equipe from '@/components/Equipe.vue'
 
   export default
   {
-    name:"gta",
     props:['loginUtilisateur'],
     data: function()
     {
@@ -48,8 +49,20 @@
     {
       FicheSalarie,
       Planning,
-      TableauDeBord
+      TableauDeBord,
+      Equipe
     },
+    methods:
+    {
+      deconnexion: function()
+      {
+        this.$parent.$emit('deconnexion');
+        this.$router.push({name: "accueil"});
+      }
+    },
+    /**
+     * Vérifie l'authentification et charge les pages en fonction du rôle
+     */
     created: async function()
     {
       if(this.loginUtilisateur == "")
@@ -78,7 +91,8 @@
           this.currentTab = this.tabs[0];
           break;
         case "responsable":
-          this.tabs = [
+          this.tabs =
+          [
             {
               nom: "Planning",
               component: "Planning"
@@ -90,7 +104,12 @@
             {
               nom: "Fiche salarié",
               component: "FicheSalarie"
-            }];
+            },
+            {
+              nom: "Gestion équipe",
+              component: "Equipe"
+            }
+          ];
           this.currentTab = this.tabs[0];
           break;
         case "drh":

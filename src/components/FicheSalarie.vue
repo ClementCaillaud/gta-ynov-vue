@@ -38,7 +38,6 @@
 <script>
   export default
   {
-    name: "FicheSalarie",
     props:['utilisateur'],
     data: function()
     {
@@ -49,15 +48,22 @@
     },
     methods:
     {
+      /**
+       * Enregistre les modifications effectuées
+       */
       enregistrer: function()
       {
         for(var champ in this.infos)
         {
           this.utilisateur[champ] = this.infos[champ];
         }
+        //Evenement pour mettre à jour l'utilisateur dans toute l'appli
         this.$parent.$emit("modifInfos", this.utilisateur);
         this.succesSauvegarde = true;
       },
+      /**
+       * Annule les modifications et réinitialise les données originales
+       */
       reset: function()
       {
         this.infos =

@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <router-view v-on:connexion="loginUtilisateur = $event" v-bind:loginUtilisateur="loginUtilisateur"/>
+    <router-view
+      v-on:connexion="loginUtilisateur = $event"
+      v-on:deconnexion="loginUtilisateur = ''; this.$router.push({name: 'accueil'});"
+      v-bind:loginUtilisateur="loginUtilisateur"
+    />
   </div>
 </template>
 
