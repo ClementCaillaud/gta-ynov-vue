@@ -69,3 +69,5 @@ Bilan: Affichage du planning avec un code couleur en fonction du type d'occupati
 22/11/2018
 ```
 Objectif: Terminer les compteurs horaires. Pour le responsable d'équipe, consulter et modifier le planning des membres de son équipe.
+
+Bilan: Les compteurs d'heures fonctionnent et changent de couleur si le nombre d'heure est trop élevé. Ajout de la possibilité d'utiliser les filtres de date sur le planning et les compteurs. Mise en place de l'utilisation de props à la place des structures du type this.$parent.$parent.$parent... Corrections de petits bugs/anomalies. Les responsables d'équipe peuvent désormais consulter la liste des membres de leur équipe, ainsi que la fiche salarié et le planning de chacun d'eux. Modification du planning du salarié par le manager commencé mais pas encore de solution viable. Ajout de quelques icones pour rendre tout ça un peu plus joli.
