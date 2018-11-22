@@ -5,13 +5,24 @@
       <b-navbar-brand class="d-md-none">{{currentTab.nom}}</b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
-          <b-nav-item v-for="tab in tabs" v-bind:key="tab.component" v-bind:class="[{ active: currentTab === tab }]" v-on:click="currentTab = tab">
+          <b-nav-item
+            v-for="tab in tabs"
+            v-bind:key="tab.component"
+            v-bind:class="[{ active: currentTab === tab }]"
+            v-on:click="currentTab = tab"
+          >
             {{tab.nom}}
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <component class="mt-5" v-bind:is="currentTab.component"></component>
+    <component
+      class="mt-5" 
+      v-bind:is="currentTab.component"
+      v-bind:utilisateur="utilisateur"
+      v-on:modifInfos="utilisateur = $event"
+    >
+    </component>
   </div>
 </template>
 
@@ -24,6 +35,7 @@
   export default
   {
     name:"gta",
+    props:['loginUtilisateur'],
     data: function()
     {
       return{
@@ -40,12 +52,12 @@
     },
     created: async function()
     {
-      if(this.$parent.$parent.loginUtilisateur == "")
+      if(this.loginUtilisateur == "")
       {
         this.$router.push({name: "accueil"});
       }
       //Récupération de l'utilisateur
-      this.utilisateur = await API.getUser(this.$parent.$parent.loginUtilisateur);
+      this.utilisateur = await API.getUser(this.loginUtilisateur);
       //Chargement des pages en fonction du rôle
       switch (this.utilisateur.role)
       {

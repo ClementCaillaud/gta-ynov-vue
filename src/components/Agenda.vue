@@ -27,17 +27,7 @@
   export default
   {
     name: "Agenda",
-    data: function()
-    {
-      return{
-        agenda: this.$parent.$parent.utilisateur.agenda
-      };
-    },
-    computed:
-    {
-      dateDebut: function(){return this.$parent.filtreDateDebut;},
-      dateFin: function(){return this.$parent.filtreDateFin;}
-    },
+    props:['agenda', 'dateDebut', 'dateFin'],
     methods:
     {
       classDynamique: function(type)

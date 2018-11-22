@@ -23,8 +23,8 @@
       </b-col>
     </b-row>
 
-    <Compteurs v-if="afficherCompteurs"></Compteurs>
-    <Agenda v-if="!afficherCompteurs"></Agenda>
+    <Compteurs v-if="afficherCompteurs" v-bind:agenda="utilisateur.agenda" v-bind:dateDebut="filtreDateDebut" v-bind:dateFin="filtreDateFin"></Compteurs>
+    <Agenda v-if="!afficherCompteurs" v-bind:agenda="utilisateur.agenda" v-bind:dateDebut="filtreDateDebut" v-bind:dateFin="filtreDateFin"></Agenda>
 
   </b-container>
 </template>
@@ -36,6 +36,7 @@
   export default
   {
     name: "Planning",
+    props:["utilisateur"],
     data: function()
     {
       return{

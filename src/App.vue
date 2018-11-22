@@ -1,8 +1,20 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view v-on:connexion="loginUtilisateur = $event" v-bind:loginUtilisateur="loginUtilisateur"/>
   </div>
 </template>
+
+<script>
+  export default
+  {
+    data: function()
+    {
+      return{
+        loginUtilisateur: ""
+      }
+    }
+  }
+</script>
 
 <style>
 #app {

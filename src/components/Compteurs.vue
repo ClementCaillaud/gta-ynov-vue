@@ -44,16 +44,9 @@
   export default
   {
     name: "Compteurs",
-    data: function()
-    {
-      return{
-        agenda: this.$parent.$parent.utilisateur.agenda
-      };
-    },
+    props:['agenda', 'dateDebut', 'dateFin'],
     computed:
     {
-      dateDebut: function(){return this.$parent.filtreDateDebut;},
-      dateFin: function(){return this.$parent.filtreDateFin;},
       /**
        * Retourne les compteurs de trvail jour par jour
        * @return {Array} Les compteurs quotidiens

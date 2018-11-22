@@ -15,10 +15,6 @@
     components:
     {
       Connexion
-    },
-    created: function()
-    {
-      this.$parent.$parent.loginUtilisateur = "";
     }
   }
 </script>
