@@ -151,7 +151,26 @@
       "dateNaissance" : "24/10/1984",
       "adresse" : "Là bas",
       "tel" : "0660066006",
-      "mail" : "tata@zero.com"
+      "mail" : "tata@zero.com",
+      "agenda" :
+      [
+        {
+          "date": "09/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "08:00",
+              "heureFin": "12:00",
+              "type": "Travail"
+            },
+            {
+              "heureDebut": "13:30",
+              "heureFin": "17:00",
+              "type": "Travail"
+            }
+          ]
+        }
+      ]
     },
     {
       "login" : "Titi",

@@ -70,7 +70,7 @@
                 var dureeTravail = moment.duration(moment(occupation.heureFin, "HH:mm").diff(moment(occupation.heureDebut, "HH:mm")));
                 duree.heures += dureeTravail.hours();
                 duree.minutes += dureeTravail.minutes();
-                if(duree.minutes > 60)
+                if(duree.minutes >= 60)
                 {
                   duree.heures += parseInt(duree.minutes / 60);
                   duree.minutes %= 60;
@@ -111,7 +111,7 @@
           {
             duree.heures += jour.heures;
             duree.minutes += jour.minutes;
-            if(duree.minutes > 60)
+            if(duree.minutes >= 60)
             {
               duree.heures += parseInt(duree.minutes / 60);
               duree.minutes %= 60;
@@ -150,7 +150,7 @@
           {
             duree.heures += jour.heures;
             duree.minutes += jour.minutes;
-            if(duree.minutes > 60)
+            if(duree.minutes >= 60)
             {
               duree.heures += parseInt(duree.minutes / 60);
               duree.minutes %= 60;
@@ -159,7 +159,7 @@
           compteurs.push({
             numAnnee: numAnnee,
             heures: duree.heures,
-            minutes: duree.minute
+            minutes: duree.minutes
           });
         });
         return compteurs;
