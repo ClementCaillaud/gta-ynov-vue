@@ -16,8 +16,15 @@
       </b-list-group-item>
     </b-list-group>
 
-    <FicheSalarie v-bind:utilisateur="membreSelectionne" v-if="ongletActuel=='ficheSalarie'"></FicheSalarie>
-    <Planning v-bind:utilisateur="membreSelectionne" v-if="ongletActuel=='planning'"></Planning>
+    <FicheSalarie
+      v-bind:utilisateur="membreSelectionne"
+      v-if="ongletActuel=='ficheSalarie'"
+    ></FicheSalarie>
+    <Planning
+      v-bind:utilisateur="membreSelectionne"
+      v-bind:droits="'modification'"
+      v-if="ongletActuel=='planning'"
+    ></Planning>
   </b-container>
 </template>
 
@@ -52,17 +59,6 @@
       {
         self.equipe.push(await API.getUser(nomMembre));
       });
-    },
-    methods:
-    {
-      afficherInfos: function(membre)
-      {
-
-      },
-      afficherPlanning: function(membre)
-      {
-
-      }
     }
   }
 </script>

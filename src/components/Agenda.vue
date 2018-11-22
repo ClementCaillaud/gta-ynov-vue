@@ -1,24 +1,25 @@
 <template>
-
-  <b-row class="justify-content-center">
-    <!-- Une journée -->
-    <b-col v-for="jour in agenda" class="mb-3" v-if="filtreDate(jour)">
-      <div class="bg-primary text-white mb-1">{{jour.date}}</div>
-      <b-card-group class="justify-content-center">
-        <b-row>
-          <!-- Les occupations de la journée -->
-          <b-col v-for="activite in jour.occupation">
-            <b-card :class="classDynamique(activite.type)">
-              <b-col>{{activite.heureDebut}}</b-col>
-              <b-col> {{activite.heureFin}}</b-col>
-              <b-col>{{activite.type}}</b-col>
-              <b-col >{{activite.motif}}</b-col>
-            </b-card>
-          </b-col>
-        </b-row>
-      </b-card-group>
-    </b-col>
-  </b-row>
+  <div>
+    <b-row class="justify-content-center">
+      <!-- Une journée -->
+      <b-col v-for="jour in agenda" class="mb-3" v-if="filtreDate(jour)">
+        <div class="bg-primary text-white mb-1">{{jour.date}}</div>
+        <b-card-group class="justify-content-center">
+          <b-row>
+            <!-- Les occupations de la journée -->
+            <b-col v-for="activite in jour.occupation">
+              <b-card :class="classDynamique(activite.type)">
+                <b-col>{{activite.heureDebut}}</b-col>
+                <b-col> {{activite.heureFin}}</b-col>
+                <b-col>{{activite.type}}</b-col>
+                <b-col >{{activite.motif}}</b-col>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-card-group>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
@@ -26,7 +27,7 @@
 
   export default
   {
-    props:['agenda', 'dateDebut', 'dateFin'],
+    props:['agenda', 'dateDebut', 'dateFin', 'droits'],
     methods:
     {
       /**

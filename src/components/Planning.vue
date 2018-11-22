@@ -12,7 +12,7 @@
           <b-form-input type="date" v-model="filtreDateFin"></b-form-input>
         </b-form-group>
       </b-col>
-      
+
       <!-- Basculer du mode Agenda au mode Compteur -->
       <b-col md="4">
         <toggle-button id="changed-font"
@@ -25,8 +25,19 @@
       </b-col>
     </b-row>
 
-    <Compteurs v-if="afficherCompteurs" v-bind:agenda="utilisateur.agenda" v-bind:dateDebut="filtreDateDebut" v-bind:dateFin="filtreDateFin"></Compteurs>
-    <Agenda v-if="!afficherCompteurs" v-bind:agenda="utilisateur.agenda" v-bind:dateDebut="filtreDateDebut" v-bind:dateFin="filtreDateFin"></Agenda>
+    <Compteurs
+      v-if="afficherCompteurs"
+      v-bind:agenda="utilisateur.agenda"
+      v-bind:dateDebut="filtreDateDebut"
+      v-bind:dateFin="filtreDateFin">
+    </Compteurs>
+    <Agenda
+      v-if="!afficherCompteurs"
+      v-bind:agenda="utilisateur.agenda"
+      v-bind:dateDebut="filtreDateDebut"
+      v-bind:dateFin="filtreDateFin"
+      v-bind:droits="droits"
+    ></Agenda>
 
   </b-container>
 </template>
@@ -37,7 +48,7 @@
 
   export default
   {
-    props:["utilisateur"],
+    props:["utilisateur", "droits"],
     data: function()
     {
       return{

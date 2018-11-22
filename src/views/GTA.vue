@@ -2,7 +2,7 @@
   <div class="pt-4">
     <b-navbar toggleable="md" type="dark" variant="primary" fixed="top">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand class="d-md-none">{{currentTab.nom}}</b-navbar-brand>
+      <b-navbar-brand class="d-md-none"><span v-bind:class="currentTab.icone"></span> {{currentTab.nom}}</b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item
@@ -11,9 +11,10 @@
             v-bind:class="[{ active: currentTab === tab }]"
             v-on:click="currentTab = tab"
           >
+            <span v-bind:class="tab.icone"></span>
             {{tab.nom}}
           </b-nav-item>
-          <b-nav-item v-on:click="deconnexion()">Se déconnecter</b-nav-item>
+          <b-nav-item v-on:click="deconnexion()"><span class="fas fa-sign-out-alt fa-lg"></span> Se déconnecter</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -21,6 +22,7 @@
       class="mt-5"
       v-bind:is="currentTab.component"
       v-bind:utilisateur="utilisateur"
+      v-bind:droits="'lecture'"
       v-on:modifInfos="utilisateur = $event"
     >
     </component>
@@ -78,15 +80,18 @@
           this.tabs = [
             {
               nom: "Planning",
-              component: "Planning"
+              component: "Planning",
+              icone: "fas fa-calendar-alt fa-lg"
             },
             {
               nom: "Tableau de bord",
-              component: "TableauDeBord"
+              component: "TableauDeBord",
+              icone: "fas fa-clipboard fa-lg"
             },
             {
               nom: "Fiche salarié",
-              component: "FicheSalarie"
+              component: "FicheSalarie",
+              icone: "fas fa-address-card fa-lg"
             }];
           this.currentTab = this.tabs[0];
           break;
@@ -95,19 +100,23 @@
           [
             {
               nom: "Planning",
-              component: "Planning"
+              component: "Planning",
+              icone: "fas fa-calendar-alt fa-lg"
             },
             {
               nom: "Tableau de bord",
-              component: "TableauDeBord"
+              component: "TableauDeBord",
+              icone: "fas fa-clipboard fa-lg"
             },
             {
               nom: "Fiche salarié",
-              component: "FicheSalarie"
+              component: "FicheSalarie",
+              icone: "fas fa-address-card fa-lg"
             },
             {
               nom: "Gestion équipe",
-              component: "Equipe"
+              component: "Equipe",
+              icone: "fas fa-users fa-lg"
             }
           ];
           this.currentTab = this.tabs[0];
