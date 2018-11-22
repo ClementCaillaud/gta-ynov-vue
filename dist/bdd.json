@@ -34,9 +34,20 @@
           "occupation":
           [
             {
-              "heureDebut": "08:00",
-              "heureFin": "18:00",
-              "type": "Congé"
+              "heureDebut": "",
+              "heureFin": "",
+              "type": "Repos hebdomadaire"
+            }
+          ]
+        },
+        {
+          "date": "11/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "",
+              "heureFin": "",
+              "type": "Repos hebdomadaire"
             }
           ]
         },
@@ -46,8 +57,14 @@
           [
             {
               "heureDebut": "08:00",
+              "heureFin": "16:00",
+              "type": "Travail"
+            },
+            {
+              "heureDebut": "16:00",
               "heureFin": "18:00",
-              "type": "Congé"
+              "type": "Absence",
+              "motif": "Congé sans solde"
             }
           ]
         },
@@ -58,7 +75,7 @@
             {
               "heureDebut": "08:00",
               "heureFin": "18:00",
-              "type": "Congé"
+              "type": "Congé payé"
             }
           ]
         },
@@ -69,7 +86,30 @@
             {
               "heureDebut": "08:00",
               "heureFin": "18:00",
-              "type": "Congé"
+              "type": "Jour férié"
+            }
+          ]
+        },
+        {
+          "date": "15/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "08:00",
+              "heureFin": "18:00",
+              "type": "Absence",
+              "motif": "Maladie"
+            }
+          ]
+        },
+        {
+          "date": "16/11/2018",
+          "occupation":
+          [
+            {
+              "heureDebut": "08:00",
+              "heureFin": "18:00",
+              "type": "Récupération"
             }
           ]
         }
