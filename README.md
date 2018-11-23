@@ -76,3 +76,5 @@ Bilan: Les compteurs d'heures fonctionnent et changent de couleur si le nombre d
 23/11/2018
 ```
 Objectif: Mise en place de PouchDB. Permettre au chef d'équipe de modifier le planning de son équipe et d'ajouter des salariés. Autoriser les employés à demander des changements dans leur planning.
+
+Bilan: Mise en place de PouchDB et modification de nombreux éléments du code existant pour prendre en compte ces changements. Le chef d'équipe peut ajouter un événement au planning et supprimer un existant. Pas encore la possibilité d'enregistrer les modifications apportées sur ceux existants. Les événeements ne sont pas triés dans l'ordre pour le moment.
