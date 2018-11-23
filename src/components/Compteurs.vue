@@ -18,7 +18,7 @@
       <b-tab title="Semaine">
         <b-row>
           <b-col class="compteur" v-for="semaine in compteursHebdomadaire">
-            <div class="bg-primary text-white mb-1">{{semaine.numSemaine}}</div>
+            <div class="bg-primary text-white mb-1">{{semaine.nomGroupe}}</div>
             <div :class="classCompteur('hebdomadaire', semaine)">
               {{semaine.heures}}h
               <span v-if="semaine.minutes != 0">{{semaine.minutes}}</span>
@@ -31,7 +31,7 @@
       <b-tab title="Année">
         <b-row>
           <b-col class="compteur" v-for="annee in compteursAnnuel">
-            <div class="bg-primary text-white mb-1">{{annee.numAnnee}}</div>
+            <div class="bg-primary text-white mb-1">{{annee.nomGroupe}}</div>
             <div :class="classCompteur('annuel', annee)">
               {{annee.heures}}h
               <span v-if="annee.minutes != 0">{{annee.minutes}}</span>
@@ -45,10 +45,17 @@
 
 <script>
   import moment from 'moment'
+  import PouchDB from 'pouchdb'
 
   export default
   {
-    props:['agenda', 'dateDebut', 'dateFin'],
+    props:['nomUtilisateur', 'dateDebut', 'dateFin'],
+    data: function()
+    {
+      return{
+        agenda: []
+      }
+    },
     computed:
     {
       /**
@@ -96,40 +103,11 @@
        */
       compteursHebdomadaire: function()
       {
-        var compteursQuotidien = this.compteursQuotidien;
         var compteurs = [];
-        var compteursTemp = [];
-
-        //Regroupement par semaine
-        compteursQuotidien.forEach(function(journee)
+        var self = this;
+        this.regrouper("hebdomadaire").forEach(function(groupe, nomGroupe)
         {
-          var semaine = moment(journee.date, "DD/MM/YYYY").week();
-          if(compteursTemp[semaine] === undefined)
-          {
-            compteursTemp[semaine] = [];
-          }
-          compteursTemp[semaine].push(journee);
-        });
-
-        //Calcul des durées
-        compteursTemp.forEach(function(semaine, numSemaine)
-        {
-          var duree = {heures:0, minutes:0};
-          semaine.forEach(function(jour)
-          {
-            duree.heures += jour.heures;
-            duree.minutes += jour.minutes;
-            if(duree.minutes >= 60)
-            {
-              duree.heures += parseInt(duree.minutes / 60);
-              duree.minutes %= 60;
-            }
-          });
-          compteurs.push({
-            numSemaine: numSemaine,
-            heures: duree.heures,
-            minutes: duree.minutes
-          });
+          compteurs.push(self.calculDuree(groupe, nomGroupe));
         });
         return compteurs;
       },
@@ -139,43 +117,26 @@
        */
       compteursAnnuel: function()
       {
-        var compteursQuotidien = this.compteursQuotidien;
         var compteurs = [];
-        var compteursTemp = [];
-
-        //Regroupement par année
-        compteursQuotidien.forEach(function(journee)
+        var self = this;
+        this.regrouper("annuel").forEach(function(groupe, nomGroupe)
         {
-          var annee = moment(journee.date, "DD/MM/YYYY").year();
-          if(compteursTemp[annee] === undefined)
-          {
-            compteursTemp[annee] = [];
-          }
-          compteursTemp[annee].push(journee);
-        });
-
-        //Calcul des durées
-        compteursTemp.forEach(function(annee, numAnnee)
-        {
-          var duree = {heures:0, minutes:0};
-          annee.forEach(function(jour)
-          {
-            duree.heures += jour.heures;
-            duree.minutes += jour.minutes;
-            if(duree.minutes >= 60)
-            {
-              duree.heures += parseInt(duree.minutes / 60);
-              duree.minutes %= 60;
-            }
-          });
-          compteurs.push({
-            numAnnee: numAnnee,
-            heures: duree.heures,
-            minutes: duree.minutes
-          });
+          compteurs.push(self.calculDuree(groupe, nomGroupe));
         });
         return compteurs;
       }
+    },
+    created: function()
+    {
+      var db = new PouchDB('bdd');
+      var self = this;
+
+      db.get(self.nomUtilisateur)
+        .then(function(doc)
+        {
+          self.agenda = doc.agenda;
+        })
+        .catch(function(){});
     },
     methods:
     {
@@ -217,6 +178,41 @@
           return true;
         }
         return false;
+      },
+      regrouper: function(type)
+      {
+        var compteursQuotidien = this.compteursQuotidien;
+        var compteursTemp = [];
+
+        compteursQuotidien.forEach(function(journee)
+        {
+          var groupe = (type=="hebdomadaire") ? moment(journee.date, "DD/MM/YYYY").week() : moment(journee.date, "DD/MM/YYYY").year();
+          if(compteursTemp[groupe] === undefined)
+          {
+            compteursTemp[groupe] = [];
+          }
+          compteursTemp[groupe].push(journee);
+        });
+        return compteursTemp;
+      },
+      calculDuree: function(groupe, nomGroupe)
+      {
+          var duree = {heures:0, minutes:0};
+          groupe.forEach(function(jour)
+          {
+            duree.heures += jour.heures;
+            duree.minutes += jour.minutes;
+            if(duree.minutes >= 60)
+            {
+              duree.heures += parseInt(duree.minutes / 60);
+              duree.minutes %= 60;
+            }
+          });
+          return{
+            nomGroupe: nomGroupe,
+            heures: duree.heures,
+            minutes: duree.minutes
+          };
       }
     }
   }

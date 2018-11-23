@@ -9,11 +9,21 @@
 
 <script>
   import Connexion from "@/components/Connexion.vue";
+  import PouchDB from 'pouchdb'
+
   export default
   {
     components:
     {
       Connexion
+    },
+    created: function()
+    {
+      var db = new PouchDB('bdd');
+      db.get('login_info').then(function(doc)
+      {
+        db.remove(doc);
+      }).catch(function(err){})
     }
   }
 </script>

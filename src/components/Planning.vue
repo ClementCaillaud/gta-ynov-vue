@@ -27,16 +27,15 @@
 
     <Compteurs
       v-if="afficherCompteurs"
-      v-bind:agenda="utilisateur.agenda"
+      v-bind:nomUtilisateur="nomUtilisateur"
       v-bind:dateDebut="filtreDateDebut"
       v-bind:dateFin="filtreDateFin">
     </Compteurs>
     <Agenda
       v-if="!afficherCompteurs"
-      v-bind:agenda="utilisateur.agenda"
+      v-bind:nomUtilisateur="nomUtilisateur"
       v-bind:dateDebut="filtreDateDebut"
       v-bind:dateFin="filtreDateFin"
-      v-bind:droits="droits"
     ></Agenda>
 
   </b-container>
@@ -48,7 +47,7 @@
 
   export default
   {
-    props:["utilisateur", "droits"],
+    props:["nomUtilisateur"],
     data: function()
     {
       return{

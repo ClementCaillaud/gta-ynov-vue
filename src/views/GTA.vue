@@ -18,19 +18,12 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <component
-      class="mt-5"
-      v-bind:is="currentTab.component"
-      v-bind:utilisateur="utilisateur"
-      v-bind:droits="'lecture'"
-      v-on:modifInfos="utilisateur = $event"
-    >
-    </component>
+    <component class="mt-5" v-bind:nomUtilisateur="login" v-bind:is="currentTab.component"></component>
   </div>
 </template>
 
 <script>
-  import API from '@/api.js'
+  import PouchDB from 'pouchdb'
   import FicheSalarie from '@/components/FicheSalarie.vue'
   import Planning from '@/components/Planning.vue'
   import TableauDeBord from '@/components/TableauDeBord.vue'
@@ -38,11 +31,10 @@
 
   export default
   {
-    props:['loginUtilisateur'],
     data: function()
     {
       return{
-        utilisateur: {},
+        login: "",
         tabs: [],
         currentTab: {}
       };
@@ -58,74 +50,67 @@
     {
       deconnexion: function()
       {
-        this.$parent.$emit('deconnexion');
         this.$router.push({name: "accueil"});
       }
     },
     /**
      * Vérifie l'authentification et charge les pages en fonction du rôle
      */
-    created: async function()
+    created: function()
     {
-      if(this.loginUtilisateur == "")
+      var db = new PouchDB('bdd');
+      var self = this;
+
+      const PLANNING =
       {
-        this.$router.push({name: "accueil"});
-      }
-      //Récupération de l'utilisateur
-      this.utilisateur = await API.getUser(this.loginUtilisateur);
-      //Chargement des pages en fonction du rôle
-      switch (this.utilisateur.role)
+        nom: "Planning",
+        component: "Planning",
+        icone: "fas fa-calendar-alt fa-lg"
+      };
+      const TABLEAUDEBORD =
       {
-        case "salarie":
-          this.tabs = [
-            {
-              nom: "Planning",
-              component: "Planning",
-              icone: "fas fa-calendar-alt fa-lg"
-            },
-            {
-              nom: "Tableau de bord",
-              component: "TableauDeBord",
-              icone: "fas fa-clipboard fa-lg"
-            },
-            {
-              nom: "Fiche salarié",
-              component: "FicheSalarie",
-              icone: "fas fa-address-card fa-lg"
-            }];
-          this.currentTab = this.tabs[0];
-          break;
-        case "responsable":
-          this.tabs =
-          [
-            {
-              nom: "Planning",
-              component: "Planning",
-              icone: "fas fa-calendar-alt fa-lg"
-            },
-            {
-              nom: "Tableau de bord",
-              component: "TableauDeBord",
-              icone: "fas fa-clipboard fa-lg"
-            },
-            {
-              nom: "Fiche salarié",
-              component: "FicheSalarie",
-              icone: "fas fa-address-card fa-lg"
-            },
-            {
-              nom: "Gestion équipe",
-              component: "Equipe",
-              icone: "fas fa-users fa-lg"
-            }
-          ];
-          this.currentTab = this.tabs[0];
-          break;
-        case "drh":
-          break;
-        default:
-          break;
+        nom: "Tableau de bord",
+        component: "TableauDeBord",
+        icone: "fas fa-clipboard fa-lg"
+      };
+      const FICHESALARIE =
+      {
+        nom: "Fiche salarié",
+        component: "FicheSalarie",
+        icone: "fas fa-address-card fa-lg"
+      };
+      const GESTIONEQUIPE =
+      {
+        nom: "Gestion équipe",
+        component: "Equipe",
+        icone: "fas fa-users fa-lg"
       }
+
+      db.get('login_info')
+        .then(function(doc)
+        {
+          self.login = doc.login;
+          //Chargement des pages en fonction du rôle
+          switch (doc.role)
+          {
+            case "salarie":
+              self.tabs = [PLANNING, TABLEAUDEBORD, FICHESALARIE];
+              self.currentTab = self.tabs[0];
+              break;
+            case "responsable":
+              self.tabs = [PLANNING, TABLEAUDEBORD, FICHESALARIE, GESTIONEQUIPE]
+              self.currentTab = self.tabs[0];
+              break;
+            case "drh":
+              break;
+            default:
+              break;
+          }
+        })
+        .catch(function(err)
+        {
+          self.$router.push({name: "accueil"});
+        });
     }
   }
 </script>
