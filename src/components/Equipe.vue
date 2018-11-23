@@ -9,7 +9,7 @@
         <div class="d-flex w-100 justify-content-between">
           <div>{{membre.prenom}} {{membre.nom}}</div>
           <div>
-            <b-button variant="outline-primary" v-on:click="membreSelectionne=membre; ongletActuel='ficheSalarie';">Infos</b-button>
+            <b-button class="mr-1" variant="outline-primary" v-on:click="membreSelectionne=membre; ongletActuel='ficheSalarie';">Infos</b-button>
             <b-button variant="outline-primary" v-on:click="membreSelectionne=membre; ongletActuel='planning';">Planning</b-button>
           </div>
         </div>
@@ -21,7 +21,7 @@
       v-if="ongletActuel=='ficheSalarie'"
     ></FicheSalarie>
     <Planning
-      v-bind:nomUtilisateur="membreSelectionne"
+      v-bind:nomUtilisateur="membreSelectionne.login"
       v-if="ongletActuel=='planning'"
     ></Planning>
   </b-container>
