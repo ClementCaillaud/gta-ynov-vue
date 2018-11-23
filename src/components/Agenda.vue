@@ -24,10 +24,29 @@
 
 <script>
   import moment from 'moment'
+  import PouchDB from 'pouchdb'
 
   export default
   {
-    props:['agenda', 'dateDebut', 'dateFin', 'droits'],
+    props:['nomUtilisateur', 'dateDebut', 'dateFin'],
+    data: function()
+    {
+      return{
+        agenda: []
+      };
+    },
+    created: function()
+    {
+      var db = new PouchDB('bdd');
+      var self = this;
+
+      db.get(self.nomUtilisateur)
+        .then(function(doc)
+        {
+          self.agenda = doc.agenda;
+        })
+        .catch(function(err){});
+    },
     methods:
     {
       /**

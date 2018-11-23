@@ -36,9 +36,11 @@
 </template>
 
 <script>
+  import PouchDB from 'pouchdb'
+
   export default
   {
-    props:['utilisateur'],
+    props:['nomUtilisateur'],
     data: function()
     {
       return{
@@ -53,28 +55,30 @@
        */
       enregistrer: function()
       {
-        for(var champ in this.infos)
-        {
-          this.utilisateur[champ] = this.infos[champ];
-        }
-        //Evenement pour mettre à jour l'utilisateur dans toute l'appli
-        this.$parent.$emit("modifInfos", this.utilisateur);
-        this.succesSauvegarde = true;
+        var db = new PouchDB('bdd');
+        var self = this;
+
+        db.put(self.infos)
+          .then(function()
+          {
+            self.succesSauvegarde = true;
+          })
+          .catch(function(err){})
       },
       /**
        * Annule les modifications et réinitialise les données originales
        */
       reset: function()
       {
-        this.infos =
-        {
-          nom: this.utilisateur.nom,
-          prenom: this.utilisateur.prenom,
-          dateNaissance: this.utilisateur.dateNaissance,
-          adresse: this.utilisateur.adresse,
-          tel: this.utilisateur.tel,
-          mail: this.utilisateur.mail
-        };
+        var db = new PouchDB('bdd');
+        var self = this;
+
+        db.get(self.nomUtilisateur)
+          .then(function(doc)
+          {
+            self.infos = doc;
+          })
+          .catch(function(err){});
       }
     },
     created:function()
