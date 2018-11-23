@@ -2,12 +2,12 @@
   <div class="pb-5">
     <b-row class="justify-content-center mb-5">
       <!-- Une journée -->
-      <b-col v-for="jour in agenda" class="mb-3" v-if="filtreDate(jour)">
+      <b-col v-for="(jour, indexJour) in agenda" class="mb-3" v-if="filtreDate(jour)">
         <div class="bg-primary text-white mb-1">{{jour.date}}</div>
         <b-card-group class="justify-content-center">
           <b-row>
             <!-- Les occupations de la journée -->
-            <b-col v-for="activite in jour.occupation">
+            <b-col v-for="(activite, indexActivite) in jour.occupation">
               <b-card :class="classDynamique(activite.type)" v-if="droit=='lecture'">
                 <b-col>{{activite.heureDebut}}</b-col>
                 <b-col> {{activite.heureFin}}</b-col>
@@ -27,6 +27,7 @@
                 <b-input-group prepend="Motif" v-if="activite.occupation == 'Absence'" class="mb-3">
                   <b-form-select :options="motifsAbsence" v-model="activite.motif"></b-form-select>
                 </b-input-group>
+                <b-button variant="danger" v-on:click="supprimerOccupation(indexJour, indexActivite)"><span class="fas fa-trash fa-lg"></span></b-button>
               </b-card>
             </b-col>
           </b-row>
@@ -177,7 +178,6 @@
           {
             doc.agenda.forEach(function(journee)
             {
-              console.log(moment(journee.date, "DD/MM/YYYY"));console.log(moment(self.formulaireAjout.date, "YYYY-MM-DD"));
               if(moment(journee.date, "DD/MM/YYYY").diff(moment(self.formulaireAjout.date, "YYYY-MM-DD")) == 0)
               {
                 journee.occupation.push({
@@ -186,15 +186,33 @@
                   type: self.formulaireAjout.occupation,
                   motif: self.formulaireAjout.motif
                 });
-                console.log(doc);
                 db.put(doc);
               }
             });
+            db.get(self.nomUtilisateur)
+              .then(function(doc)
+              {
+                self.agenda = doc.agenda;
+              })
+              .catch(function(err){});
           })
           .catch(function(err){});
 
         this.afficherModalAjouter = false;
-        this.created();
+      },
+      supprimerOccupation: function(indexJour, indexActivite)
+      {
+        var db = new PouchDB('bdd');
+        var self = this;
+
+        db.get(self.nomUtilisateur)
+          .then(function(doc)
+          {
+            doc.agenda[indexJour].occupation.splice(indexActivite, 1);
+            db.put(doc);
+            self.agenda = doc.agenda;
+          })
+          .catch(function(err){});
       }
     }
   }
